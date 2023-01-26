@@ -2,84 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Excercise;
-use Illuminate\Http\Request;
+use App\Http\Resources\ExerciseResource;
+use App\Http\Responses\SuccessResponse;
+use App\Models\MuscleGroup;
+use App\Services\Exercise\ExerciseServiceInterface;
 
 class ExerciseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct(
+        protected ExerciseServiceInterface $exerciseService,
+    )
     {
-        //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function index(MuscleGroup $muscleGroup): SuccessResponse
     {
-        //
-    }
+        $exercises = $this->exerciseService->getList($muscleGroup->id);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Excercise  $excercise
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Excercise $excercise)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Excercise  $excercise
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Excercise $excercise)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Excercise  $excercise
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Excercise $excercise)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Excercise  $excercise
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Excercise $excercise)
-    {
-        //
+        return new SuccessResponse([
+            'payload' => ExerciseResource::collection($exercises),
+        ]);
     }
 }

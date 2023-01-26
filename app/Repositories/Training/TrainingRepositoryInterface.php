@@ -8,7 +8,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 interface TrainingRepositoryInterface
 {
-
     /**
      * @param array $data
      *

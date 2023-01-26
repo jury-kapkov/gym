@@ -38,7 +38,9 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/web.php'));
         });
 
-        Route::model('muscle-group', MuscleGroup::class);
+        Route::bind('muscle_group', function ($value) {
+            return MuscleGroup::query()->findOrFail($value);
+        });
     }
 
     /**

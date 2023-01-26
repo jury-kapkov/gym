@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('approaches', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('training_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('exercises_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('trainings_exercise_id')->constrained()->cascadeOnDelete();
             $table->integer('count');
             $table->integer('weight');
             $table->timestamps();

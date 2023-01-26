@@ -27,14 +27,14 @@ class TrainingController extends Controller
         );
 
         return new SuccessResponse([
-            'data' => TrainingResource::collection($trainings)
+            'payload' => TrainingResource::collection($trainings)
         ]);
     }
 
     public function get(Training $training): SuccessResponse
     {
         return new SuccessResponse([
-            'data' => TrainingResource::make($training)
+            'payload' => TrainingResource::make($training)
         ]);
     }
 
@@ -46,7 +46,7 @@ class TrainingController extends Controller
         ]);
 
         return new SuccessResponse([
-            'data' => TrainingResource::make($training)
+            'payload' => TrainingResource::make($training)
         ]);
     }
 

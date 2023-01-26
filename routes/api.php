@@ -19,9 +19,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResources([
     'trainings'    => TrainingController::class,
-    'muscle-group' => MuscleGroupController::class,
+    'trainings/{training}/approaches' => ApproachController::class,
+    'muscle-group/{muscle_group}/exercises' => ExerciseController::class
 ]);
 
-Route::apiResources(['trainings/{training}/approaches' => ApproachController::class]);
-Route::apiResources(['muscle-group/{muscle-group}/exercises' => ExerciseController::class]);
+Route::get('muscle-group', [MuscleGroupController::class, 'index']);
 
