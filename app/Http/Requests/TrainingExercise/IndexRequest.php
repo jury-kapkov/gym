@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\TrainingExercise;
 
+use App\Models\Training;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateRequest extends FormRequest
+class IndexRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,9 @@ class CreateRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $training = Training::query()->find($this->get('training_id'));
+
+        return $training && $training->user_id = $this->user()->id;
     }
 
     /**
@@ -24,7 +27,7 @@ class CreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'string|required',
+            'training_id' => 'integer|required|exists:trainings,id',
         ];
     }
 }

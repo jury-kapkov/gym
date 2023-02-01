@@ -12,8 +12,8 @@ class TrainingResource extends JsonResource
             'id'         => $this->id,
             'name'       => $this->name,
             'user_id'    => $this->user_id,
-            'created_at' => $this->created_at,
-            'exercises'  => ExerciseResource::collection($this->exercises),
+            'created_at' => $this->created_at->format("Y.m.d"),
+            'exercises'  => TrainingExerciseResource::collection($this->exercises),
         ];
     }
 }

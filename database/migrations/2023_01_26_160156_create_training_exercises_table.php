@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('trainings_exercises', function (Blueprint $table) {
+        Schema::create('training_exercises', function (Blueprint $table) {
             $table->id();
             $table->foreignId('training_id')->constrained()->cascadeOnDelete();
             $table->foreignId('exercise_id')->constrained()->cascadeOnDelete();
+            $table->timestamps();
         });
     }
 

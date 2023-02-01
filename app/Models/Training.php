@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Arr;
 
 class Training extends Model
@@ -16,7 +16,7 @@ class Training extends Model
 
     public function exercises(): HasMany
     {
-        return $this->hasMany(Exercise::class);
+        return $this->hasMany(TrainingExercise::class);
     }
 
     public function scopeFilter(Builder $builder, array $filters): Builder

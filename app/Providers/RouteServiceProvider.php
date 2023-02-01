@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\MuscleGroup;
+use App\Models\TrainingExercise;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -40,6 +41,10 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::bind('muscle_group', function ($value) {
             return MuscleGroup::query()->findOrFail($value);
+        });
+
+        Route::bind('trainings_exercise', function ($value) {
+            return TrainingExercise::query()->findOrFail($value);
         });
     }
 

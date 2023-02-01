@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateRequest;
 use App\Http\Requests\Training\IndexRequest;
+use App\Http\Requests\Training\StoreRequest;
 use App\Http\Resources\TrainingResource;
 use App\Http\Responses\FailResponse;
 use App\Http\Responses\SuccessResponse;
@@ -22,7 +22,7 @@ class TrainingController extends Controller
     {
         $trainings = $this->trainingService->getPaginatedList(
             $request->user()->id,
-            ['exercises'],
+            ['exercises.exercise.muscleGroup', 'exercises.approaches'],
             $request->filters(),
         );
 
@@ -38,7 +38,7 @@ class TrainingController extends Controller
         ]);
     }
 
-    public function store(CreateRequest $request): SuccessResponse
+    public function store(StoreRequest $request): SuccessResponse
     {
         $training = Training::query()->create([
             'name'    => $request->get('name'),

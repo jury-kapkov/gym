@@ -4,6 +4,7 @@ use App\Http\Controllers\ApproachController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\MuscleGroupController;
 use App\Http\Controllers\TrainingController;
+use App\Http\Controllers\TrainingExerciseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,12 +17,12 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::middleware(['auth:sanctum'])->group(function(){
+    Route::apiResource('trainings', TrainingController::class);
+    Route::apiResource('trainings-exercises', TrainingExerciseController::class);
+    Route::apiResource('trainings-exercises/{trainings_exercise}/approaches', ApproachController::class);
 
-Route::apiResources([
-    'trainings'    => TrainingController::class,
-    'trainings/{training}/approaches' => ApproachController::class,
-    'muscle-group/{muscle_group}/exercises' => ExerciseController::class
-]);
-
-Route::get('muscle-group', [MuscleGroupController::class, 'index']);
+    Route::get('muscle-group/{muscle_group}/exercises', [ExerciseController::class, 'index']);
+    Route::get('muscle-group', [MuscleGroupController::class, 'index']);
+});
 
