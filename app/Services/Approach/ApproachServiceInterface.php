@@ -22,4 +22,19 @@ interface ApproachServiceInterface
      * @return LengthAwarePaginator
      */
     public function getPaginatedList(int $trainingExerciseID, array $with = []): LengthAwarePaginator;
+
+    /**
+     * @param Approach $approach
+     * @param array $data
+     *
+     * @return bool
+     */
+    public function update(Approach $approach, array $data): bool;
+
+    /**
+     * @param Approach $approach
+     *
+     * @return bool
+     */
+    public function delete(Approach $approach): bool;
 }

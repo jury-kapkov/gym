@@ -24,9 +24,16 @@ class ApproachService implements ApproachServiceInterface
     {
         $perPage = config('pagination.approaches_per_page');
 
-        return Approach::query()
-            ->where('training_exercise_id', '=', $trainingExerciseID)
-            ->with($with)
-            ->paginate($perPage);
+        return $this->approachRepository->getPaginatedList($perPage, $trainingExerciseID, $with);
+    }
+
+    public function update(Approach $approach, array $data): bool
+    {
+        return $this->approachRepository->update($approach, $data);
+    }
+
+    public function delete(Approach $approach): bool
+    {
+        return $this->approachRepository->delete($approach);
     }
 }

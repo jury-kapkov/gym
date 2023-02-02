@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Approach\StoreRequest;
+use App\Http\Requests\Approach\UpdateRequest;
 use App\Http\Resources\ApproachResource;
+use App\Http\Responses\FailResponse;
 use App\Http\Responses\SuccessResponse;
-use App\Models\Exercise;
-use App\Models\Training;
+use App\Models\Approach;
 use App\Models\TrainingExercise;
 use App\Services\Approach\ApproachServiceInterface;
 use App\Services\TrainingExercise\TrainingExerciseServiceInterface;
@@ -16,9 +17,20 @@ class ApproachController extends Controller
 {
     public function __construct(
         protected TrainingExerciseServiceInterface $exerciseService,
-        protected ApproachServiceInterface $approachService,
+        protected ApproachServiceInterface         $approachService,
     )
     {
+    }
+
+    public function index(TrainingExercise $trainingExercise): JsonResponse
+    {
+        $approaches = $this->approachService->getPaginatedList(
+            $trainingExercise->id,
+        );
+
+        return new SuccessResponse([
+            'payload' => ApproachResource::collection($approaches),
+        ]);
     }
 
     public function store(StoreRequest $request, TrainingExercise $trainingExercise): JsonResponse
@@ -33,14 +45,24 @@ class ApproachController extends Controller
         ]);
     }
 
-    public function index(TrainingExercise $trainingExercise): JsonResponse
+    public function update(UpdateRequest $request, Approach $approach): JsonResponse
     {
-        $approaches = $this->approachService->getPaginatedList(
-            $trainingExercise->id,
+        $isUpdated = $this->approachService->update(
+            $approach,
+            $request->validated(),
         );
 
-        return new SuccessResponse([
-            'payload' => ApproachResource::collection($approaches),
-        ]);
+        return $isUpdated
+            ? new SuccessResponse()
+            : new FailResponse();
+    }
+
+    public function destroy(Approach $approach): JsonResponse
+    {
+        $isDeleted = $this->approachService->delete($approach);
+
+        return $isDeleted
+            ? new SuccessResponse()
+            : new FailResponse();
     }
 }
