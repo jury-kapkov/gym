@@ -37,4 +37,12 @@ interface TrainingServiceInterface
      * @return bool
      */
     public function delete(Training $training): bool;
+
+    /**
+     * @param Training $training
+     * @param array $data
+     *
+     * @return bool
+     */
+    public function update(Training $training, array $data): bool;
 }

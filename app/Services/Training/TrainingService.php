@@ -38,4 +38,9 @@ class TrainingService implements TrainingServiceInterface
     {
         return $this->trainingRepository->getTraining($ID, $with);
     }
+
+    public function update(Training $training, array $data): bool
+    {
+        return $this->trainingRepository->update($training, $data);
+    }
 }

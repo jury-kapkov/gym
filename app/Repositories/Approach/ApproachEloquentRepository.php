@@ -23,7 +23,7 @@ class ApproachEloquentRepository implements ApproachRepositoryInterface
 
     public function update(Approach $approach, array $data): bool
     {
-        $approach->update($data);
+        return $approach->update($data);
     }
 
     public function delete(Approach $approach): bool

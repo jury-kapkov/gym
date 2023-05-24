@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Training\IndexRequest;
 use App\Http\Requests\Training\StoreRequest;
+use App\Http\Requests\Training\UpdateRequest;
 use App\Http\Resources\TrainingResource;
 use App\Http\Responses\FailResponse;
 use App\Http\Responses\SuccessResponse;
 use App\Models\Training;
 use App\Services\Training\TrainingServiceInterface;
 
-class TrainingController extends Controller
+class  TrainingController extends Controller
 {
     public function __construct(
         protected TrainingServiceInterface $trainingService
@@ -31,11 +32,23 @@ class TrainingController extends Controller
         ]);
     }
 
-    public function get(Training $training): SuccessResponse
+    public function show(Training $training): SuccessResponse
     {
         return new SuccessResponse([
             'payload' => TrainingResource::make($training)
         ]);
+    }
+
+    public function update(UpdateRequest $request, Training $training): SuccessResponse|FailResponse
+    {
+        $isUpdated = $this->trainingService->update(
+            $training,
+            $request->validated(),
+        );
+
+        return $isUpdated
+            ? new SuccessResponse()
+            : new FailResponse();
     }
 
     public function store(StoreRequest $request): SuccessResponse

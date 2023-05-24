@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TrainingExercise\IndexRequest;
 use App\Http\Requests\TrainingExercise\StoreRequest;
 use App\Http\Resources\TrainingExerciseResource;
+use App\Http\Responses\FailResponse;
 use App\Http\Responses\SuccessResponse;
-use App\Models\Exercise;
-use App\Models\Training;
 use App\Models\TrainingExercise;
 use App\Services\TrainingExercise\TrainingExerciseServiceInterface;
 use Illuminate\Http\JsonResponse;
@@ -41,5 +40,12 @@ class TrainingExerciseController extends Controller
         return new SuccessResponse([
             'payload' => TrainingExerciseResource::collection($trainingExercise),
         ]);
+    }
+
+    public function destroy(TrainingExercise $trainingExercise): JsonResponse
+    {
+        return $trainingExercise->delete()
+            ? new SuccessResponse()
+            : new FailResponse();
     }
 }
